@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--  
+	用户sql
+-->
+<sql-statement namespace="platform.userInfo">
+	
+	<!-- 分页查询用户 -->
+	<sql id="paging">
+		<![CDATA[ 
+        	<% if(db_type == "mysql"){ %>
+        	
+        		select * from pt_userinfo order by ids asc limit ? offset ?
+        	
+        	<% } else if(db_type == "postgresql"){ %>
+        	
+        		select * from pt_userinfo order by ids asc limit ? offset ?
+        		
+        	<% } else if(db_type == "oracle"){ %>
+        	
+        		select * from ( select a.*, rownum rn from (select * from pt_userinfo) a where rownum <= ? ) where rn >= ?
+        		
+        	<% } %>
+    	]]>
+	</sql>
+
+</sql-statement>

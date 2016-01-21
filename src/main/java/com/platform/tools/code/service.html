@@ -1,0 +1,16 @@
+package ${package};
+
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
+
+import com.jfinal.aop.Enhancer;
+
+import com.platform.mvc.base.BaseService;
+
+public class ${className}Service extends BaseService {
+
+	@SuppressWarnings("unused")
+	private static Logger log = LoggerFactory.getLogger(${className}Service.class);
+	
+	public static final ${className}Service service = Enhancer.enhance(${className}Service.class);
+	
+}

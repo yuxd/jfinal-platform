@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--  
+	岗位sql
+-->
+<sql-statement namespace="platform.station">
+	
+	<!-- 查询所有岗位 -->
+	<sql id="paging">
+		<![CDATA[ 
+        	<% if(db_type == "mysql"){ %>
+        	
+        		select * from pt_station order by ids asc limit ? offset ? 
+        	
+        	<% } else if(db_type == "postgresql"){ %>
+        	
+        		select * from pt_station order by ids asc limit ? offset ? 
+        		
+        	<% } else if(db_type == "oracle"){ %>
+        	
+        		select * from ( select a.*, rownum rn from (select * from pt_station) a where rownum <= ? ) where rn >= ?
+        		
+        	<% } %>
+    	]]>
+	</sql>
+	
+	<!-- 根节点 -->
+	<sql id="root">
+		<![CDATA[ 
+        	select ids, names, isparent, images from pt_station where parentStationIds is null order by orderIds asc
+    	]]>
+	</sql>
+	
+	<!-- 子节点 -->
+	<sql id="child">
+		<![CDATA[ 
+        	select ids, names, isparent, images from pt_station where parentStationIds = ? order by orderIds asc
+    	]]>
+	</sql>
+	
+	<!-- 子节点数量 -->
+	<sql id="childCount">
+		<![CDATA[ 
+        	select count(*) as counts from pt_station where parentstationids = ?
+    	]]>
+	</sql>
+	
+</sql-statement>
